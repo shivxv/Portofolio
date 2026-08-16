@@ -1,24 +1,5 @@
-const text = "Full Stack Developer";
-let i = 0;
-
-function typeWriter() {
-    if (i < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 100);
-    }
-}
-
-typeWriter();
-const observer = new IntersectionObserver((entries)=>{
-    entries.forEach((entry)=>{
-        if(entry.isIntersecting){
-            entry.target.classList.add("show");
-        }
-    });
-});
-
-document.querySelectorAll("section").forEach((el)=>{
-    el.classList.add("hidden");
-    observer.observe(el);
-});
+const roles=['Frontend Developer','React.js Developer','JavaScript Developer','Creative Developer'];let roleIndex=0;const role=document.querySelector('#role');setInterval(()=>{role.style.opacity=0;setTimeout(()=>{roleIndex=(roleIndex+1)%roles.length;role.textContent=roles[roleIndex];role.style.opacity=1},220)},2600);
+const nav=document.querySelector('.nav');const links=[...document.querySelectorAll('.nav-links a')];window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>35);let current='home';document.querySelectorAll('main section[id]').forEach(s=>{if(scrollY>=s.offsetTop-180)current=s.id});links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current))},{passive:true});
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');if(e.target.querySelector('.timeline'))e.target.querySelector('.timeline').classList.add('visible')}}),{threshold:.14});document.querySelectorAll('.reveal').forEach(x=>observer.observe(x));
+const cursor=document.querySelector('.cursor');if(matchMedia('(pointer:fine)').matches){window.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});document.querySelectorAll('a,button,.tilt,.skill-card').forEach(el=>el.addEventListener('mouseenter',()=>cursor.classList.add('hover')));document.querySelectorAll('a,button,.tilt,.skill-card').forEach(el=>el.addEventListener('mouseleave',()=>cursor.classList.remove('hover')));const art=document.querySelector('#hero-art');art.addEventListener('mousemove',e=>{let r=art.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;art.style.transform=`perspective(800px) rotateY(${x*8}deg) rotateX(${-y*8}deg)`});art.addEventListener('mouseleave',()=>art.style.transform='')}
+document.querySelector('.menu-toggle').addEventListener('click',()=>document.querySelector('.nav-links').classList.toggle('open'));document.querySelector('#contact-form').addEventListener('submit',e=>{e.preventDefault();const f=e.currentTarget;const subject=encodeURIComponent('Portfolio enquiry from '+f.name.value);const body=encodeURIComponent(f.message.value+'\n\nFrom: '+f.name.value+' ('+f.email.value+')');window.location.href=`mailto:shivnarayanshar05@gmail.com?subject=${subject}&body=${body}`;f.querySelector('.form-status').textContent='Opening your email app…'});
